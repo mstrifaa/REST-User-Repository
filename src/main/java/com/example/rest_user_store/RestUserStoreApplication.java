@@ -12,11 +12,5 @@ public class RestUserStoreApplication {
         SpringApplication.run(RestUserStoreApplication.class, args);
     }
 
-    @GetMapping("/")
-    @ResponseBody
-    public String home(){
-        return "hello world";
-    }
-
 }
 

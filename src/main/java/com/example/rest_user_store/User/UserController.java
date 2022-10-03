@@ -45,7 +45,7 @@ public class UserController {
     @GetMapping("/{tags}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> getUsers(@PathVariable("tags") String[] tags){
-        userService.getUsers(tags);
+//        userService.getUsers(tags);
 
         return new ResponseEntity<>(userService.getUsers(tags).toString(), HttpStatus.OK);
     }
