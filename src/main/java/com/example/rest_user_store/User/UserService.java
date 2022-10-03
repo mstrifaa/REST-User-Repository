@@ -3,6 +3,10 @@ package com.example.rest_user_store.User;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -12,8 +16,9 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public String findUserById(Integer id){
-        return userRepository.findById(id).toString();
+    public Optional<UserEntity> findUserById(Integer id){
+
+        return userRepository.findById(id);
     }
 
     public void createUser(UserRequest userRequest){
@@ -27,5 +32,22 @@ public class UserService {
                 userRequest.getPhone()
         );
         userRepository.save(user);
+    }
+
+    public List<UserEntity> getUsers(String[] tags){
+        List<UserEntity> usersByTags = userRepository.findByTags(tags);
+
+        Iterator<UserEntity> it = usersByTags.iterator();
+
+        while(it.hasNext()) {
+            UserEntity u = it.next();
+            String[] t = u.get;
+            if (!t.equals(tags)){
+                usersByTags.remove(u);
+            }
+            System.out.println(it.next());
+        }
+
+        return usersByTags;
     }
 }

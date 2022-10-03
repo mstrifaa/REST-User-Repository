@@ -1,9 +1,10 @@
 package com.example.rest_user_store.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserEntity {
 
     @Id
@@ -21,6 +22,10 @@ public class UserEntity {
     private String lastname;
     private String password;
     private String phone;
+
+    private String tags;
+
+    private Integer expiry;
 
     public UserEntity(){}
 
@@ -68,10 +73,18 @@ public class UserEntity {
         this.phone = phone;
     }
 
+    public void setTags(String[] tags){
+        this.tags = tags.toString();
+    }
+
+    public void setExpiry(int expiry){
+        this.expiry = expiry;
+    }
+
     @Override
     public String toString() {
         return "id: "+getId()+ "\n" +
                 "name: "+ getFirstname()+" " +getLastname()+ "\n" +
-                "phone: " +getPhone();
+                "phone: " + getPhone();
     }
 }
