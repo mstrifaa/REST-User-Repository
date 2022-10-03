@@ -1,6 +1,7 @@
 package com.example.rest_user_store.User;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 
 @Entity
@@ -73,11 +74,19 @@ public class UserEntity {
         this.phone = phone;
     }
 
+    public String[] getTags(){
+        return this.tags.split(",");
+    }
+
+    public Integer getExpiry() {
+        return expiry;
+    }
+
     public void setTags(String[] tags){
         this.tags = tags.toString();
     }
 
-    public void setExpiry(int expiry){
+    public void setExpiry(Integer expiry){
         this.expiry = expiry;
     }
 

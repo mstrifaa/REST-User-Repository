@@ -3,6 +3,9 @@ package com.example.rest_user_store.User;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -38,16 +41,24 @@ public class UserService {
         List<UserEntity> usersByTags = userRepository.findByTags(tags);
 
         Iterator<UserEntity> it = usersByTags.iterator();
-
         while(it.hasNext()) {
             UserEntity u = it.next();
             String[] t = u.getTags();
-            if (!t.equals(tags)){
+            Integer e = u.getExpiry();
+            if (!t.equals(tags) || !(LocalDateTime.now()-e.intValue())){ // to check for expiry
                 usersByTags.remove(u);
             }
             System.out.println(it.next());
         }
 
         return usersByTags;
+    }
+
+
+    public void updateUser(Integer id, String[][] updates){
+        UserEntity u = userRepository.findById(id);
+
+        u.setTags(updates[0]);
+        u.setExpiry(Integer.parseInt(String.valueOf(updates[1])));
     }
 }

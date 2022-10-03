@@ -38,8 +38,8 @@ public class UserController {
     @PatchMapping("/{id}/tags")
     @ResponseStatus(HttpStatus.OK)
     public void updateUser(@PathVariable("id") Integer id, @RequestBody String[][] updates){
-        UserEntity user = () userService.findUserById(id);
-        user.setTags(updates[0]);
+        if(userService.findUserById(id).isPresent())
+            userService.updateUser(id,updates);
     }
 
     @GetMapping("/{tags}")
