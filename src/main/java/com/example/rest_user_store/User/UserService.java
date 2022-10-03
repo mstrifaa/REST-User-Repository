@@ -4,6 +4,7 @@ package com.example.rest_user_store.User;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +18,9 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<UserEntity> findUserById(Integer id){
+    public UserEntity findUserById(Integer id){
 
-        return userRepository.findById(id);
+        return userRepository.findById(id).get();
     }
 
     public void createUser(UserRequest userRequest){
@@ -43,7 +44,7 @@ public class UserService {
             UserEntity u = it.next();
             String[] t = u.getTags();
             Integer e = u.getExpiry();
-            if (!t.equals(tags) || !(LocalDateTime.now()-e.intValue())){ // to check for expiry
+            if (!t.equals(tags) && (LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli()-e.intValue())){ // to check for expiry
                 usersByTags.remove(u);
             }
             System.out.println(it.next());
@@ -54,9 +55,9 @@ public class UserService {
 
 
     public void updateUser(Integer id, String[][] updates){
-        UserEntity u = userRepository.findById(id);
+        Optional<UserEntity> u = userRepository.findById(id);
 
-        u.setTags(updates[0]);
-        u.setExpiry(Integer.parseInt(String.valueOf(updates[1])));
+        u.get().setTags(updates[0]);
+        u.get().setExpiry(Integer.parseInt(String.valueOf(updates[1])));
     }
 }

@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public Optional<UserEntity> getUser(@PathVariable("id") Integer id){
+    public UserEntity getUser(@PathVariable("id") Integer id){
         return userService.findUserById(id);
     }
 
@@ -38,8 +38,8 @@ public class UserController {
     @PatchMapping("/{id}/tags")
     @ResponseStatus(HttpStatus.OK)
     public void updateUser(@PathVariable("id") Integer id, @RequestBody String[][] updates){
-        if(userService.findUserById(id).isPresent())
-            userService.updateUser(id,updates);
+        if(userService.findUserById(id)!=null)
+            userService.updateUser(id, updates);
     }
 
     @GetMapping("/{tags}")
