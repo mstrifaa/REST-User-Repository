@@ -41,7 +41,7 @@ public class UserService {
 
         while(it.hasNext()) {
             UserEntity u = it.next();
-            String[] t = u.get;
+            String[] t = u.getTags();
             if (!t.equals(tags)){
                 usersByTags.remove(u);
             }
